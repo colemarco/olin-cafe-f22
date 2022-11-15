@@ -7,8 +7,9 @@ VVP_POST=-fst
 .PHONY: clean submission
 
 # VVV Add any additional files you need for the alu to the targets. VVV
-ALU_SRCS:=hdl/mux*.sv hdl/adder*.sv hdl/alu.sv hdl/shift*.sv
+ALU_SRCS:=hdl/mux*.sv hdl/adder*.sv hdl/alu.sv hdl/shift*.sv hdl/comparator_eq*.sv hdl/slt*.sv
 ALU_TEST_FILES:=tests/test_alu.sv tests/alu_behavioural.sv
+
 test_alu: ${ALU_TEST_FILES} ${ALU_SRCS} tests/alu_testcases.memh
 	${IVERILOG} ${ALU_TEST_FILES} ${ALU_SRCS} -o test_alu.bin && ${VVP} test_alu.bin ${VVP_POST}
 
@@ -19,6 +20,11 @@ RFILE_SRCS:=hdl/register.sv hdl/register_file.sv hdl/mux*.sv
 
 test_register_file: ${RFILE_SRCS} tests/test_register_file.sv
 	${IVERILOG} $^ -o test_register_file.bin && ${VVP} test_register_file.bin ${VVP_POST}
+
+SHLEFT_SRCS:= hdl/shift_left_logical.sv hdl/mux*.sv
+
+test_shift_left: ${SHLEFT_SRCS} tests/test_shift_left.sv
+	${IVERILOG} $^ -o test_shift_left.bin && ${VVP} test_shift_left.bin ${VVP_POST}
 
 waves_register_file: test_register_file
 	gtkwave register_file.fst

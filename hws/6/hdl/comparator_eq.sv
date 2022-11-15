@@ -1,6 +1,7 @@
 `timescale 1ns/1ps
 `default_nettype none
 module comparator_eq(a, b, out);
+
 parameter N = 32;
 input wire signed [N-1:0] a, b;
 output logic out;
@@ -11,11 +12,4 @@ always_comb begin
 end
 
 // Copy any other modules you use into the HDL folder and update the Makefile accordingly.
-always_comb begin
-  // behavioural: high level
-  out = (a == b);
-
-  
-end
-
 endmodule
